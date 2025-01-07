@@ -39,11 +39,11 @@ import com.anju.demo.model.Employee;
 
 @RestController
 @RequestMapping("")
-public class RestControllerMicro2 {
+public class RestControllerMicroClient {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	private static final Logger log = LoggerFactory.getLogger(RestControllerMicro2.class) ;
+	private static final Logger log = LoggerFactory.getLogger(RestControllerMicroClient.class) ;
 	
 	private String baseUrl = "http://localhost:9056/";
 	private String requestUrl;
