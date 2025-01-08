@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.anju</groupId>
-	<artifactId>SpringBootMicroservice-2</artifactId>
+	<artifactId>SpringBootMicroservice-Client</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SpringBootMicroservice-Client</name>
 	<description>Demo project for Spring Boot Microservice</description>
@@ -53,6 +53,35 @@
 		    <scope>system</scope>
 		    <systemPath>D:/STS_workspace/SpringBootMicroservice-2/libs/ModelSource.jar</systemPath>
 		</dependency> -->
+		<!-- dependency for grpc -->
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>3.6.1</version>
+		</dependency>		
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-netty-shaded</artifactId>
+			<version>1.15.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-protobuf</artifactId>
+			<version>1.15.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-stub</artifactId>
+			<version>1.15.1</version>
+		</dependency>
+		<!--end;  dependency for grpc -->
+		<!--model mapper to map grpc response to model class -->
+		<dependency>
+    		<groupId>org.modelmapper</groupId>
+    		<artifactId>modelmapper</artifactId>
+    		<version>3.1.0</version>
+		</dependency>
+		<!--end; model mapper to map grpc response to model class -->
 	</dependencies>
 
 	<build>
@@ -61,6 +90,40 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			<!-- compile proto file into java files. -->
+			<plugin>
+				<groupId>com.github.os72</groupId>
+				<artifactId>protoc-jar-maven-plugin</artifactId>
+				<version>3.6.0.1</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+						   <includeMavenTypes>direct</includeMavenTypes>
+							<inputDirectories> <!-- path where proto files are kept -->
+								<include>src/main/resources/proto</include>
+							</inputDirectories>							
+							<outputTargets>
+								<outputTarget>
+									<type>java</type>
+									<outputDirectory>src/main/java</outputDirectory>
+								</outputTarget>
+								<outputTarget>
+									<type>grpc-java</type>
+									<pluginArtifact>io.grpc:protoc-gen-grpc-java:1.15.0</pluginArtifact>
+									<!-- path where stubs has to be generated, pkg is specified inside proto file-->
+									<outputDirectory>src/main/java</outputDirectory> 
+								</outputTarget>
+							</outputTargets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
 		</plugins>
 	</build>
 

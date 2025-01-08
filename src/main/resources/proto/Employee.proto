@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option java_package = "com.anju.demo.stub";
+
+service EmployeeService {
+	rpc getAnEmployee(EmployeeRequest) returns (EmployeeResponse);
+	rpc getAllEmployees(AllEmployeeRequest) returns (AllEmployeeResponse);
+	rpc isAnEmployeeAsync(EmployeeRequest) returns (IsAnEmployeeResponse);
+}
+
+message EmployeeRequest{
+	int32 empId = 1;
+}
+
+message EmployeeResponse {
+	int32 empId = 1;
+	string empName = 2;
+}
+
+message AllEmployeeRequest{
+
+}
+
+message AllEmployeeResponse{
+	repeated EmployeeResponse employee = 1;
+}
+
+message IsAnEmployeeResponse{
+	bool isAnEmployee = 1;
+}
